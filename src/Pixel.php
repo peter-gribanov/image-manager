@@ -1,23 +1,34 @@
 ﻿<?php
-namespace imagemanager;
+/**
+ * ImageManager package
+ *
+ * @package   ImageManager
+ * @author    Peter Gribanov <info@peter-gribanov.ru>
+ * @copyright Copyright (c) 2010, Peter Gribanov
+ * @license   http://opensource.org/licenses/MIT MIT
+ */
+
+namespace ImageManager;
 
 /**
- * Class Pixel
+ * Pixel
  *
- * Used
+ * Usage:
+ * <code>
  *  $px = new Pixel();
  *  $px->setColor('Cyanogen');
  *  $px->getColorAsString();
- * 
+ * </code>
+ *
+ * <code>
  *  Pixel::create('#cc00ff')->getColor();
- * 
- * @package	Image Manager
- * @author	Peter Gribanov
- * @since	18.11.2010
- * @version	1.2
+ * </code>
+ *
+ * @package ImageManager
+ * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Pixel {
-
+class Pixel
+{
 	/**
 	 * Выбранный цвет
 	 * По умолчанию черный
@@ -177,6 +188,4 @@ class Pixel {
 		unset($this->color);
 		$this->color = array(0,0,0);
 	}
-
 }
-?>

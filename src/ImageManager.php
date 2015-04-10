@@ -1,16 +1,23 @@
 ﻿<?php
-namespace imagemanager;
+/**
+ * ImageManager package
+ *
+ * @package   ImageManager
+ * @author    Peter Gribanov <info@peter-gribanov.ru>
+ * @copyright Copyright (c) 2010, Peter Gribanov
+ * @license   http://opensource.org/licenses/MIT MIT
+ */
+
+namespace ImageManager;
 
 /**
- * Class ImageManager
- * 
- * @package	Image Manager
- * @author	Peter Gribanov
- * @since	25.03.2010
- * @version	2.3
+ * Manager
+ *
+ * @package ImageManager
+ * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ImageManager {
-
+class ImageManager
+{
 	/**
 	 * @var	resource
 	 */
@@ -346,6 +353,4 @@ class ImageManager {
 	public function __destruct(){
 		$this->clear();
 	}
-
 }
-?>
