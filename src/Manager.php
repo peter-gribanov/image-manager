@@ -16,7 +16,7 @@ namespace ImageManager;
  * @package ImageManager
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ImageManager
+class Manager
 {
     /**
      * @var resource
