@@ -158,53 +158,53 @@ class Pixel
         }
 
         $color = strtolower($color);
-        // color names - blue
+        // color named
         if (isset($this->names[$color])){
             $this->color = $this->names[$color];
             return true;
         }
 
-        if ($color[0] == '#') {
-            // hex #0000ff
-            if (preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', $color, $match)){
-                $this->color = array(
-                    hexdec($match[1]),
-                    hexdec($match[2]),
-                    hexdec($match[3])
-                );
-                return true;
-            }
-            // hex #00f
-            if (preg_match('/^#([0-9a-f]{1})([0-9a-f]{1})([0-9a-f]{1})$/', $color, $match)){
-                $this->color = array(
-                    hexdec($match[1].$match[1]),
-                    hexdec($match[2].$match[2]),
-                    hexdec($match[3].$match[3])
-                );
-                return true;
-            }
-            return false;
-        }
-
-        // rgb(0, 0, 255)
-        if (preg_match('/^rgb\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3})\)$/i', $color, $match)){
-            $this->color = array($match[1], $match[2], $match[3]);
-            return true;
-        }
-
-        // cmyk(100, 100, 100, 10)
-        if (preg_match('/^cmyk\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3})\)$/i', $color, $match)){
-            $c = (255 * $match[1]) / 100;
-            $m = (255 * $match[2]) / 100;
-            $y = (255 * $match[3]) / 100;
-            $k = (255 * $match[4]) / 100;
-
-            $this->color = array(
-                round((255 - $c) * (255 - $k) / 255),
-                round((255 - $m) * (255 - $k) / 255),
-                round((255 - $y) * (255 - $k) / 255)
-            );
-            return true;
+        switch ($color[0]) {
+            case '#':
+                // hex #0000ff
+                if (preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', $color, $match)){
+                    $this->color = array(
+                        hexdec($match[1]),
+                        hexdec($match[2]),
+                        hexdec($match[3])
+                    );
+                    return true;
+                }
+                // hex #00f
+                if (preg_match('/^#([0-9a-f]{1})([0-9a-f]{1})([0-9a-f]{1})$/', $color, $match)){
+                    $this->color = array(
+                        hexdec($match[1].$match[1]),
+                        hexdec($match[2].$match[2]),
+                        hexdec($match[3].$match[3])
+                    );
+                    return true;
+                }
+                break;
+            case 'r': // rgb(0, 0, 255)
+                if (preg_match('/^rgb\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3})\)$/', $color, $match)){
+                    $this->color = array($match[1], $match[2], $match[3]);
+                    return true;
+                }
+                break;
+            case 'c': // cmyk(100, 100, 100, 10)
+                if (preg_match('/^cmyk\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3})\)$/', $color, $match)){
+                    $c = (255 * $match[1]) / 100;
+                    $m = (255 * $match[2]) / 100;
+                    $y = (255 * $match[3]) / 100;
+                    $k = (255 * $match[4]) / 100;
+                    $this->color = array(
+                        round((255 - $c) * (255 - $k) / 255),
+                        round((255 - $m) * (255 - $k) / 255),
+                        round((255 - $y) * (255 - $k) / 255)
+                    );
+                    return true;
+                }
+                break;
         }
 
         return false;
