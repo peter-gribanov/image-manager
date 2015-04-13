@@ -103,7 +103,7 @@ class Pixel
     /**
      * Construct
      *
-     * @param string
+     * @param string $color
      */
     public function __construct($color = '')
     {
@@ -147,7 +147,7 @@ class Pixel
      *  - rgb(0,0,255)
      *  - cmyk(100,100,100,10)
      *
-     * @param string
+     * @param string $color
      *
      * @return boolean
      */
