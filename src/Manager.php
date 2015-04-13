@@ -36,6 +36,8 @@ class Manager
 
 
     /**
+     * Construct
+     *
      * @param string $file
      */
     public function __construct($file = '')
@@ -46,6 +48,8 @@ class Manager
     }
 
     /**
+     * Read file
+     *
      * @param string $file
      *
      * @return boolen
@@ -78,6 +82,8 @@ class Manager
     }
 
     /**
+     * Set filename
+     *
      * @param string $file
      */
     public function setFilename($file)
@@ -86,6 +92,8 @@ class Manager
     }
 
     /**
+     * Get filename
+     *
      * @return string
      */
     public function getFilename()
@@ -94,6 +102,8 @@ class Manager
     }
 
     /**
+     * Get image resource
+     *
      * @return resource
      */
     public function getImage()
@@ -102,11 +112,14 @@ class Manager
     }
 
     /**
+     * Reset image
+     *
      * @param integer $width
      * @param integer $height
      */
     public function reset($width, $height)
     {
+        $this->clear();
         $this->image = imagecreatetruecolor($width, $height);
     }
 
@@ -121,6 +134,8 @@ class Manager
     }
 
     /**
+     * Write image to file
+     *
      * @param string $file
      * @param integer $mode
      *
@@ -155,6 +170,8 @@ class Manager
     }
 
     /**
+     * Get image width
+     *
      * @return integer
      */
     public function getWidth()
@@ -163,6 +180,8 @@ class Manager
     }
 
     /**
+     * Get image height
+     *
      * @return integer
      */
     public function getHeight()
@@ -171,6 +190,8 @@ class Manager
     }
 
     /**
+     * Resize image
+     *
      * @param integer $width
      * @param integer $height
      *
@@ -207,6 +228,8 @@ class Manager
     }
 
     /**
+     * Crop image
+     *
      * @param integer $width
      * @param integer $height
      * @param integer $x
@@ -275,6 +298,8 @@ class Manager
      }*/
 
     /**
+     * Create image thumbnail
+     *
      * @param integer $out_width
      * @param integer $out_height
      * @param boolean $bestfit
@@ -283,30 +308,25 @@ class Manager
      */
     public function thumbnail($out_width = 0, $out_height = 0, $bestfit = false)
     {
-        // не выбран выходной размер изображения
         if ($out_width < 0 && $out_height < 0) {
             return false;
         }
 
-        // получение размера рисунка
         $in_width  = $this->getWidth();
         $in_height = $this->getHeight();
 
-        // размер исходного изображения меньше требуемого
         if ($in_width <= $out_width && $in_height <= $out_height) {
             return false;
         }
 
+        // calculation of proportions
         if ($bestfit && $out_width && $out_height) {
-            // создание эскиза с сохранением размеров
             $up_width  = $in_width;
             $up_height = $in_height;
-            // вычисление пропорций
             if ($up_width > $out_width) {
                 $up_width = $out_width;
                 $up_height = ceil(($in_height * (($out_width * 100) / $in_width)) / 100);
             }
-            // вычисление пропорций
             if ($up_height > $out_height) {
                 $up_height = $out_height;
                 $up_width = ceil(($in_width * (($out_height * 100) / $in_height)) / 100);
@@ -314,21 +334,20 @@ class Manager
             list($out_width, $out_height) = array($up_width, $up_height);
             unset($up_width, $up_height);
         } else {
-            // вычисление пропорций
             if (!$out_width) {
                 $out_width = ceil(($in_width * (($out_height * 100) / $in_height)) / 100);
             }
-            // вычисление пропорций
             if (!$out_height) {
                 $out_height = ceil(($in_height * (($out_width * 100) / $in_width)) / 100);
             }
         }
 
-        // выполнение изменения размера
         return $this->resize($out_width, $out_height);
     }
 
     /**
+     * Crop thumbnail
+     *
      * @param integer $out_width
      * @param integer $out_height
      *
@@ -336,11 +355,9 @@ class Manager
      */
     public function cropThumbnail($out_width, $out_height)
     {
-        // получение размера рисунка
         $in_width  = $this->getWidth();
         $in_height = $this->getHeight();
 
-        // размер исходного изображения меньше требуемого
         if ($in_width <= $out_width && $in_height <= $out_height) {
             return false;
         }
@@ -348,7 +365,7 @@ class Manager
         $up_height = $out_height;
         $up_width  = $out_width;
 
-        // вычисление пропорций
+        // calculation of proportions
         if ($in_width > $in_height){
             if (ceil(($in_width * (($out_height * 100) / $in_height)) / 100) > $out_width) {
                 $up_width = ceil(($in_width * (($out_height * 100) / $in_height)) / 100);
@@ -363,7 +380,6 @@ class Manager
             }
         }
 
-        // выполнение изменения размера
         if (!$this->resize($up_width, $up_height)) {
             return false;
         }
@@ -376,6 +392,8 @@ class Manager
     }
 
     /**
+     * Set image background color
+     *
      * @param \ImageManager\Pixel $color
      *
      * @return boolean
@@ -389,20 +407,22 @@ class Manager
     }
 
     /**
+     * Validate size limit
+     *
      * @param string $file
      *
      * @return boolen
      */
     public function validateSizeLimit($file)
     {
-        list($width, $height) = getimagesize($file);
+        list($width, $height, ) = getimagesize($file);
         $max = $width * $height * 4;
         $max =+ $max * 0.25;
         return $max < $this->getMemoryLimit();
     }
 
     /**
-     * Возвращает максимальный объем данных в байтах, которые можно занести в память
+     * Get memory limit in bytes
      *
      * @return integer
      */
@@ -429,6 +449,8 @@ class Manager
     }
 
     /**
+     * Clear image
+     *
      * @return \ImageManager\Manager
      */
     public function clear()
@@ -441,6 +463,9 @@ class Manager
         return $this;
     }
 
+    /**
+     * Destruct
+     */
     public function __destruct()
     {
         $this->clear();
