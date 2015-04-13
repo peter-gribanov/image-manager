@@ -275,27 +275,28 @@ class Manager
      *
      * @param integer
      * @param integer
+     *
+     * @return boolean
      *//*
-     public function scaleImage($out_width, $out_height){
-     // получение размера рисунка
-     $in_width  = $up_width  = $this->getWidth();
-     $in_height = $up_height = $this->getHeight();
+     public function scale($out_width, $out_height)
+     {
+         $in_width  = $up_width  = $this->getWidth();
+         $in_height = $up_height = $this->getHeight();
 
-     // размер исходного изображения меньше требуемого
-     if ($in_width<=$out_width && $in_height<=$out_height) return;
+         if ($in_width <= $out_width && $in_height <= $out_height) {
+             return false;
+         }
 
-     // вычисление пропорций
-     if ($up_width > $out_width){
-     $up_width  = $out_width;
-     $up_height = ceil(($in_height*(($out_width*100)/$in_width))/100);
-     }
-     if ($up_height > $out_height){
-     $up_height = $out_height;
-     $up_width  = ceil(($in_width*(($out_height*100)/$in_height))/100);
-     }
-     // выполнение изменения размера
-     $this->resizeImage($up_width, $up_height);
-     }*/
+         if ($up_width > $out_width) {
+             $up_width  = $out_width;
+             $up_height = ceil(($in_height * (($out_width * 100) / $in_width)) / 100);
+         }
+         if ($up_height > $out_height) {
+             $up_height = $out_height;
+             $up_width  = ceil(($in_width * (($out_height * 100) / $in_height)) / 100);
+         }
+         return $this->resize($up_width, $up_height);
+     } */
 
     /**
      * Create image thumbnail
